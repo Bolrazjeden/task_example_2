@@ -74,7 +74,7 @@ test.describe('Users API', () => {
   });
   })
 
-  // Its not assertion, but it will fail the test if response time is more than expected 
+  // Its not assertion, but it will fail the test if response time is more than expected
   // test.setTimeout(100)
   test('Test POST user endpoint response time', async () => {
     const requestBody = testData[0]

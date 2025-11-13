@@ -4,7 +4,8 @@ import { UsersApiClient } from './UsersApi';
 import { GetUsersResponseDTO, PostUserResponseDTO } from './UsersApi.dto';
 import { UsersExpected } from './UsersApi.expected';
 
-// I would go even one level deeper and create test helpers methods in its own class to have for example: error messages under control and in one place
+// I would go even one level deeper and create test helpers methods in its own class to have for example: 
+// error messages under control and in one place (can be used for custom reporter later on)
 // but for the sake of this example I will keep it here
 // This class will contain methods to perform API calls and validate responses
 export class UsersApiResponseSteps {
