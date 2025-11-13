@@ -1,0 +1,7 @@
+{
+    "baseStageUrl": "https://reqres.in/",
+    "usersApi":
+    {
+        "getUsers": "api/users"
+    }
+}
