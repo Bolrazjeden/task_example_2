@@ -4,11 +4,17 @@ import { UsersApiClient } from './UsersApi';
 import { GetUsersResponseDTO, PostUserResponseDTO } from './UsersApi.dto';
 import { UsersExpected } from './UsersApi.expected';
 
+// NOTES:
 // I would go even one level deeper and create test helpers methods in its own class to have for example: 
 // error messages under control and in one place (can be used for custom reporter later on)
 // but for the sake of this example I will keep it here
-// This class will contain methods to perform API calls and validate responses
-export class UsersApiResponseSteps {
+
+/**
+ * UsersApiTestSteps
+ * 
+ * This class contains methods to interact with Users API and validate responses
+ */
+export class UsersApiTestSteps {
   private client: UsersApiClient;
   usersExpected = new UsersExpected();
 
