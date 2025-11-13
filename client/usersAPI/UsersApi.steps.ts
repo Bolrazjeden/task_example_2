@@ -54,7 +54,6 @@ export class UsersApiResponseSteps {
     const response = await this.client.postUser(requestBody);
     expect(response.status()).toBe(201);
     const data = await response.json();
-    console.log('POST User Response Data:', data);
     return data;
   }
 
