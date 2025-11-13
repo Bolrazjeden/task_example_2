@@ -70,4 +70,8 @@ export class UsersApiResponseSteps {
   validateResponseStructure = (postUserData: PostUserResponseDTO) => {
     expect(postUserData).toMatchObject(this.usersExpected.postUserResponse);
   }
+
+  validateResponseTimeIsLessThan = async (actuallTime: number, maxAllowedTime: number) => {
+    expect(actuallTime).toBeLessThanOrEqual(maxAllowedTime);
+}
 }

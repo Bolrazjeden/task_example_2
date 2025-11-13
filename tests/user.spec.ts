@@ -1,19 +1,10 @@
-import { UsersApiResponseSteps } from '../client/usersAPI/UsersApi.steps';
-import { UsersApiClient } from '../client/usersAPI/UsersApi';
 import { PostUserResponseDTO, GetUsersResponseDTO } from '../client/usersAPI/UsersApi.dto';
 import { test } from '../implementation/usersApiRequest.fixture';
 import testData from '../utils/users.json';
-import { expect } from '@playwright/test';
 
 test.describe('Users API', { tag: '@users' }, async () => {
-  let usersSteps: UsersApiResponseSteps;
   let usersData: GetUsersResponseDTO;
   let postUsersResponseData: PostUserResponseDTO;
-
-  test.beforeEach(async ({ usersApiRequest }) => {
-    const client = new UsersApiClient(usersApiRequest);
-    usersSteps = new UsersApiResponseSteps(client);
-  });
 
   test('Test total property for GET users endpoint',
     {
@@ -21,7 +12,7 @@ test.describe('Users API', { tag: '@users' }, async () => {
         type: 'scenario',
         description: 'Url to test scenario'
       },
-    }, async () => {
+    }, async ({ usersSteps }) => {
       const expectedTotal = 12;
 
       await test.step('Get users data on page two ', async () => {
@@ -37,7 +28,7 @@ test.describe('Users API', { tag: '@users' }, async () => {
       });
     });
 
-  test('Test last_name property for GET users endpoint', async () => {
+  test('Test last_name property for GET users endpoint', async ({ usersSteps }) => {
     await test.step('Get users data on page two ', async () => {
       usersData = await usersSteps.getUsersDataOnPageTwo();
     });
@@ -51,7 +42,7 @@ test.describe('Users API', { tag: '@users' }, async () => {
     })
   });
 
-  test('Test data types in GET users endpoint response', async () => {
+  test('Test data types in GET users endpoint response', async ({ usersSteps }) => {
     await test.step('Get users data on page two ', async () => {
       usersData = await usersSteps.getUsersDataOnPageTwo();
     });
@@ -62,7 +53,7 @@ test.describe('Users API', { tag: '@users' }, async () => {
   });
 
   testData.forEach(object => {
-    test('Test POST user endpoint for name: ' + object.name, async () => {
+    test('Test POST user endpoint for name: ' + object.name, async ({ usersSteps }) => {
       await test.step('Post user data to POST user endpoint for name: ' + object.name, async () => {
         postUsersResponseData = await usersSteps.postUserData(object);
       });
@@ -82,7 +73,7 @@ test.describe('Users API', { tag: '@users' }, async () => {
 
   // Its not assertion, but it will fail the test if response time is more than expected
   // test.setTimeout(100)
-  test('Test POST user endpoint response time', async () => {
+  test('Test POST user endpoint response time', async ({ usersSteps }) => {
     const requestBody = testData[0]
     let postResponseTime: number;
     const maxAllowedTime = 100;
@@ -92,7 +83,7 @@ test.describe('Users API', { tag: '@users' }, async () => {
       await usersSteps.postUserData(requestBody);
       const endTime = Date.now();
       postResponseTime = endTime - startTime;
-      expect(postResponseTime).toBeLessThanOrEqual(maxAllowedTime);
+      usersSteps.validateResponseTimeIsLessThan(postResponseTime, maxAllowedTime);
     });
   })
 });
